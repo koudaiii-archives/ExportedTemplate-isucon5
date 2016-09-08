@@ -1,0 +1,361 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_bench_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_image_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_bench_name": {
+            "defaultValue": "bench",
+            "type": "String"
+        },
+        "virtualMachines_image_name": {
+            "defaultValue": "image",
+            "type": "String"
+        },
+        "networkInterfaces_bench_name": {
+            "defaultValue": "bench",
+            "type": "String"
+        },
+        "networkInterfaces_image_name": {
+            "defaultValue": "image",
+            "type": "String"
+        },
+        "networkSecurityGroups_isucon5qualifier_name": {
+            "defaultValue": "isucon5qualifier",
+            "type": "String"
+        },
+        "publicIPAddresses_bench_name": {
+            "defaultValue": "bench",
+            "type": "String"
+        },
+        "publicIPAddresses_image_name": {
+            "defaultValue": "image",
+            "type": "String"
+        },
+        "virtualNetworks_isucon5qualifier_name": {
+            "defaultValue": "isucon5qualifier",
+            "type": "String"
+        },
+        "storageAccounts_g6yqkbruegyjustorage_name": {
+            "defaultValue": "g6yqkbruegyjustorage",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Compute/virtualMachines/bench' から一般化されました。",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_bench_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_F4s"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04.0-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_bench_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_g6yqkbruegyjustorage_name'), '.blob.core.windows.net', concat('/isucon5qualifier/', parameters('virtualMachines_bench_name'),'.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_bench_name')]",
+                    "adminUsername": "isucon",
+                    "customData": "IyEvYmluL3NoCgpzZXQgLWUKCnNlZCAtaS5iYWsgLWUgInNAaHR0cDovL3VzXC5hcmNoaXZlXC51YnVudHVcLmNvbS91YnVudHUvQG1pcnJvcjovL21pcnJvcnMudWJ1bnR1LmNvbS9taXJyb3JzLnR4dEBnIiAvZXRjL2FwdC9zb3VyY2VzLmxpc3QKZXhwb3J0IERFQklBTl9GUk9OVEVORD1ub25pbnRlcmFjdGl2ZQphcHQtZ2V0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgYW5zaWJsZSBnaXQKCmNkIC9tbnQKZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9tYXRzdXUvYW5zaWJsZS1pc3Vjb24uZ2l0CigKICBjZCBhbnNpYmxlLWlzdWNvbi9pc3Vjb241LXF1YWxpZmllcgogIFBZVEhPTlVOQlVGRkVSRUQ9MSBBTlNJQkxFX0ZPUkNFX0NPTE9SPXRydWUgYW5zaWJsZS1wbGF5Ym9vayAtaSBsb2NhbCBiZW5jaC9hbnNpYmxlL3BsYXlib29rLnltbAopCnJtIC1yZiBhbnNpYmxlLWlzdWNvbgo=",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/isucon/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1DHSkzvRwhAtdDHtK2eZ7zenetjAvIgwSFHpkKmUPsxvy6vHSJTKRVLS0xveyZWWGz5eqdaZ9OtqueU5Iq1lQCnJ5VaHJ2CSxkOuKqJxQagEoArAuHtJY5BdutWwAAo18cm8fPU0MHHVv0YqosUmkxxuNUIrLK553lHSVGRcIG0ZkJqUzyBB55pAV0bN6/b+rUjxt0x1zuPhJHRAHFwOTv9p56Vm/cUIqQybrcWR8FLOXYc5G79WX9kEzWmiqx5DH6Uq/rFOjoNlT3zuCAfX7UcKdmoAorGR2u1y79HG/9WOvldZ6Cp1EmBuqTsdzKt/VocIVex7OagDCXayBaC4N y.yamada6426@gmail.com"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_bench_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_bench_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_g6yqkbruegyjustorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_bench_name'))]"
+            ]
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Compute/virtualMachines/image' から一般化されました。",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_image_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_F4s"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04.0-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_image_name')]",
+                        "createOption": "[concat('FromImage', parameters('virtualMachines_image_name'))]",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_g6yqkbruegyjustorage_name'), '.blob.core.windows.net', concat('/isucon5qualifier/', parameters('virtualMachines_image_name'),'.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_image_name')]",
+                    "adminUsername": "isucon",
+                    "customData": "IyEvYmluL3NoCgpzZXQgLWUKCnNlZCAtaS5iYWsgLWUgInNAaHR0cDovL3VzXC5hcmNoaXZlXC51YnVudHVcLmNvbS91YnVudHUvQG1pcnJvcjovL21pcnJvcnMudWJ1bnR1LmNvbS9taXJyb3JzLnR4dEBnIiAvZXRjL2FwdC9zb3VyY2VzLmxpc3QKZXhwb3J0IERFQklBTl9GUk9OVEVORD1ub25pbnRlcmFjdGl2ZQphcHQtZ2V0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgYW5zaWJsZSBnaXQKCmNkIC9tbnQKZ2l0IGNsb25lIC1iIGlzdWNvbjUtcXVhbGlmaWVyIGh0dHBzOi8vZ2l0aHViLmNvbS9tYXRzdXUvYW5zaWJsZS1pc3Vjb24uZ2l0CigKICBjZCBhbnNpYmxlLWlzdWNvbi9pc3Vjb241LXF1YWxpZmllcgogIHNlZCAtaSAtZSAicy9teXNxbC1zZXJ2ZXItNS42L21hcmlhZGItc2VydmVyLyIgaW1hZ2UvYW5zaWJsZS8wM19taWRkbGV3YXJlLnltbAogIHNlZCAtaSAtZSAiL3N1ZG9fdXNlci9kIiBpbWFnZS9hbnNpYmxlLzA3X2RlcGxveV9kYXRhYmFzZS55bWwKICBQWVRIT05VTkJVRkZFUkVEPTEgQU5TSUJMRV9GT1JDRV9DT0xPUj10cnVlIGFuc2libGUtcGxheWJvb2sgLWkgbG9jYWwgaW1hZ2UvYW5zaWJsZS9wbGF5Ym9vay55bWwKKQpybSAtcmYgYW5zaWJsZS1pc3Vjb24K",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/isucon/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1DHSkzvRwhAtdDHtK2eZ7zenetjAvIgwSFHpkKmUPsxvy6vHSJTKRVLS0xveyZWWGz5eqdaZ9OtqueU5Iq1lQCnJ5VaHJ2CSxkOuKqJxQagEoArAuHtJY5BdutWwAAo18cm8fPU0MHHVv0YqosUmkxxuNUIrLK553lHSVGRcIG0ZkJqUzyBB55pAV0bN6/b+rUjxt0x1zuPhJHRAHFwOTv9p56Vm/cUIqQybrcWR8FLOXYc5G79WX9kEzWmiqx5DH6Uq/rFOjoNlT3zuCAfX7UcKdmoAorGR2u1y79HG/9WOvldZ6Cp1EmBuqTsdzKt/VocIVex7OagDCXayBaC4N y.yamada6426@gmail.com"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_image_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_image_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_g6yqkbruegyjustorage_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_image_name'))]"
+            ]
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/networkInterfaces/bench' から一般化されました。",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_bench_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "isucon5qualifier",
+                        "properties": {
+                            "privateIPAddress": "10.5.1.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_bench_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_isucon5qualifier_name')), '/subnets/isucon5qualifier')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_isucon5qualifier_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_bench_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_isucon5qualifier_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_isucon5qualifier_name'))]"
+            ]
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/networkInterfaces/image' から一般化されました。",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_image_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "isucon5qualifier",
+                        "properties": {
+                            "privateIPAddress": "10.5.1.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_image_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_isucon5qualifier_name')), '/subnets/isucon5qualifier')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_isucon5qualifier_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_image_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_isucon5qualifier_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_isucon5qualifier_name'))]"
+            ]
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/networkSecurityGroups/isucon5qualifier' から一般化されました。",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_isucon5qualifier_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[concat(parameters('networkSecurityGroups_isucon5qualifier_name'),'-ssh')]",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "0.0.0.0/0",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('networkSecurityGroups_isucon5qualifier_name'),'-http')]",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/publicIPAddresses/bench' から一般化されました。",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_bench_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/publicIPAddresses/image' から一般化されました。",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_image_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Network/virtualNetworks/isucon5qualifier' から一般化されました。",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_isucon5qualifier_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.5.0.0/16"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": []
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('virtualNetworks_isucon5qualifier_name')]",
+                        "properties": {
+                            "addressPrefix": "10.5.1.0/24"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "リソース '/subscriptions/6d59a090-da42-4030-b7fa-b259ba1ed216/resourceGroups/isucon5/providers/Microsoft.Storage/storageAccounts/g6yqkbruegyjustorage' から一般化されました。",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_g6yqkbruegyjustorage_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "japaneast",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        }
+    ]
+}

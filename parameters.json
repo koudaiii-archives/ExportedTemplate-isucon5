@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_bench_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_image_adminPassword": {
+            "value": null
+        },
+        "virtualMachines_bench_name": {
+            "value": null
+        },
+        "virtualMachines_image_name": {
+            "value": null
+        },
+        "networkInterfaces_bench_name": {
+            "value": null
+        },
+        "networkInterfaces_image_name": {
+            "value": null
+        },
+        "networkSecurityGroups_isucon5qualifier_name": {
+            "value": null
+        },
+        "publicIPAddresses_bench_name": {
+            "value": null
+        },
+        "publicIPAddresses_image_name": {
+            "value": null
+        },
+        "virtualNetworks_isucon5qualifier_name": {
+            "value": null
+        },
+        "storageAccounts_g6yqkbruegyjustorage_name": {
+            "value": null
+        }
+    }
+}
